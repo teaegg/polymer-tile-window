@@ -25,26 +25,34 @@
   <h1>polymer-tile-window DEMO</h1>
   <div class="demo">
 
-  <polymer-tile-window style="background: blue;" fit>
-    <polymer-tile> 
-      <tile>
-        <tile style="background: yellow;"></tile>
-        <tile style="background: red;" linkto="popup2">
-          clickable
-        </tile>
-      </tile>
-      <tile style="background: orange;" linkto="popup1">
-          clickable
-      </tile>
-      <tile double style="background: purple;"></tile>
-    </polymer-tile>
+  <polymer-tile-window style="background: blue;" fit transitions="hero-transition">
+    <section>
+      <polymer-tile fit> 
+        <div tile>
+          <div tile style="background: yellow;"></div>
+          <div tile style="background: red;" linkto="popup2" hero-id="popup2">
+            <button hero-id="btn2">click me</button>
+          <div hero-i="popup"></div>
+          </div>
+        </div>
+        <div tile style="background: orange;" linkto="popup1" hero-id="popup1">
+            <button hero-id="btn1">click me</button>
+        </div>
+        <div tile double style="background: purple;"></div>
+      </polymer-tile>
+    </section>
 
-    <window id="popup1" fit style="background: orange;">
-      <button closeButton>close</button>
-    </window>
-    <window id="popup2" fit style="background: red;">
-      <button closeButton>close</button>
-    </window>
+    <section window id="popup1" >
+      <div fit style="background: orange;" hero-id="popup1" hero>
+        <button closeButton hero-id="btn1">click me</button>
+      </div>
+    </section>
+
+    <section window id="popup2">
+      <div fit style="background: red;" hero-id="popup2" hero>
+        <button closeButton hero-id="btn2">click me</button>
+      </div>
+    </section>
   </polymer-tile-window>
   
   </div>

@@ -33,21 +33,39 @@ Or [download as ZIP](https://github.com/teaegg/polymer-tile-window/archive/maste
 3. Start using it!
 
     ```html
-    <polymer-tile-window fit>
-      <polymer-tile> 
-        <tile>
-          <tile style="background: yellow;"></tile>
-          <tile style="background: red;" linkto="popup2"></tile>
-        </tile>
-        <tile style="background: orange;" linkto="popup1"></tile>
-        <tile double style="background: purple;"></tile>
-      </polymer-tile>
-      <window id="popup1" fit style="background: orange;">
-        <button closeButton>close</button>
-      </window>
-      <window id="popup2" fit style="background: red;">
-        <button closeButton>close</button>
-      </window>
+    <polymer-tile-window style="background: blue;" transitions="hero-transition">
+    
+      Do not set 'hero' attribute to any tag for first section, 
+      the tile-window will automatically controll 'hero' for you.
+      'linkto' attribute will make the tile links to a window in another section by id.
+      clicking 'closeButton' will call the 'restore' method.
+
+      <section>
+        <polymer-tile fit> 
+          <div tile>
+            <div tile style="background: yellow;"></div>
+            <div tile style="background: red;" linkto="popup2" hero-id="popup2">
+            <div hero-i="popup"></div>
+            </div>
+          </div>
+          <div tile style="background: orange;" linkto="popup1" hero-id="popup1">
+              clickable
+          </div>
+          <div tile double style="background: purple;"></div>
+        </polymer-tile>
+      </section>
+
+      <section window id="popup1" >
+        <div fit style="background: orange;" hero-id="popup1" hero>
+          <button closeButton>close</button>
+        </div>
+      </section>
+
+      <section window id="popup2">
+        <div fit style="background: red;" hero-id="popup2" hero>
+          <button closeButton>close</button>
+        </div>
+      </section>
     </polymer-tile-window>
     ```
 
