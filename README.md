@@ -24,7 +24,7 @@ Or [download as ZIP](https://github.com/teaegg/polymer-tile-window/archive/maste
     <script src="bower_components/webcomponentsjs/webcomponents.min.js"></script>
     ```
 
-2. Import polymer-tile:
+2. Import polymer-tile-window:
 
     ```html
     <link rel="import" href="bower_components/polymer-tile-window/polymer-tile-window.html">
