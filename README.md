@@ -1,4 +1,4 @@
-# polymer-tile
+# polymer-tile-window
 
 A tile component using [Polymer](http://www.polymer-project.org/).
 
