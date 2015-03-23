@@ -60,8 +60,8 @@ valueattr="id">
 
       ready: function() {
         this.super();
-        this.addEventListener('core-animated-pages-transition-prepare', this.transitionPrepare);
-        this.addEventListener('core-animated-pages-transition-end', this.transitionEnd);
+        this.addEventListener('core-animated-pages-transition-prepare', this.beforeTransition);
+        this.addEventListener('core-animated-pages-transition-end', this.afterTransition);
         this._tileClickHandler = this.tileClickHandler.bind(this);
         this._restore = this.restore.bind(this);
         // this.$.tileContainer.setup();
@@ -72,8 +72,8 @@ valueattr="id">
       detached: function() {
         this.super();
         // Remove listener
-        this.removeEventListener('core-animated-pages-transition-prepare', this.transitionPrepare);
-        this.removeEventListener('core-animated-pages-transition-end', this.transitionEnd);
+        this.removeEventListener('core-animated-pages-transition-prepare', this.beforeTransition);
+        this.removeEventListener('core-animated-pages-transition-end', this.afterTransition);
         this.detaching = true;
         this.registerHandler();
       },
@@ -102,13 +102,14 @@ valueattr="id">
         }
       },
 
-      transitionPrepare: function() {
+      afterTransition: function() {
+                         console.log('end');
         for(var i = 0; i < this.heros.length; i++) {
           this.heros[i].removeAttribute('hero');
         }
       },
 
-      transitionEnd: function() {
+      registerHandler: function() {
         for(var i = 0; i < this.content.length; i++) {
           if(this.content[i].attributes.window) {
             var closeBtn = this.content[i].querySelector('[closeButton]');
