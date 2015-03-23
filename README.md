@@ -4,8 +4,8 @@ A tile component using [Polymer](http://www.polymer-project.org/).
 
 ## Demo
 
-[basic!](http://teaegg.github.io/polymer-tile-window)
-[advanced!](https://github.com/teaegg/polymer-windows)
+[basic](http://teaegg.github.io/polymer-tile-window)  
+[advanced](https://github.com/teaegg/polymer-windows)
 
 ## Install
 
