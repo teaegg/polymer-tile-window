@@ -12,7 +12,7 @@ A tile component using [Polymer](http://www.polymer-project.org/).
 Install the component using [Bower](http://bower.io/):
 
 ```sh
-$ bower install git://github.com/teaegg/polymer-tile-window.git --save
+$ bower install teaegg/polymer-tile-window --save
 ```
 
 Or [download as ZIP](https://github.com/teaegg/polymer-tile-window/archive/master.zip).
