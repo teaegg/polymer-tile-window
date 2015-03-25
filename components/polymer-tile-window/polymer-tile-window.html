@@ -1,0 +1,166 @@
+<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../polymer-tile/polymer-tile.html">
+<link rel="import" href="../core-animated-pages/core-animated-pages.html">
+
+<!--
+polymer-tile-window
+
+##### Example
+
+    <style>
+      polymer-tile {
+        padding: 5% 10% 5% 10%;background:blue;
+      }
+
+      .tile-1,
+      .tile-2,
+      .tile-4 {
+        box-sizing: border-box;
+        position: relative;
+      }
+      .tile-1 {
+        width: 120px;
+        height: 120px;
+        float: left;
+      }
+      .tile-2 {
+        width: 248px;
+        height: 120px;
+        margin: 4px;
+      }
+      .tile-2 .tile-1:nth-child(even) {
+        margin-left: 8px;
+      }
+      .tile-4 {
+        width: 248px;
+        height: 248px;
+        margin: 4px;
+      }
+    </style>
+
+    <polymer-tile-window fit transitions="hero-transition">
+
+      Do not set 'hero' attribute to any tag for first section, 
+      the tile-window will automatically controll 'hero' for you.
+      'linkto' attribute will make the tile links to a window in another section by id.
+      clicking 'closeButton' will call the 'restore' method.
+
+      <section>
+        <polymer-tile fit> 
+          <div class="tile-2">
+            <div class="tile-1" style="background: yellow;"></div>
+            <div class="tile-1" style="background: red;" linkto="popup2" hero-id="popup2">
+              <button hero-id="btn2">click me</button>
+            </div>
+          </div>
+          <div class="tile-2" style="background: orange;" linkto="popup1" hero-id="popup1">
+              <button hero-id="btn1">click me</button>
+          </div>
+          <div class="tile-4" double style="background: purple;"></div>
+        </polymer-tile>
+      </section>
+
+      <section window id="popup1" >
+        <div fit style="background: orange;" hero-id="popup1" hero>
+          <button closeButton hero-id="btn1">click me</button>
+        </div>
+      </section>
+
+      <section window id="popup2">
+        <div fit style="background: red;" hero-id="popup2" hero>
+          <button closeButton hero-id="btn2">click me</button>
+        </div>
+      </section>
+    </polymer-tile-window>
+
+@element polymer-tile-window
+@extends core-animated-pages
+@blurb polymer-tile-window.
+@status alpha
+@homepage https://github.com/teaegg/polymer-tile-window
+-->
+<polymer-element name="polymer-tile-window" extends="core-animated-pages" valueattr="id">
+
+  <template>
+      <shadow></shadow>
+  </template>
+
+  <script>
+    Polymer('polymer-tile-window', {
+
+      ready: function() {
+        this.super();
+        this.addEventListener('core-animated-pages-transition-prepare', this.beforeTransition);
+        this.addEventListener('core-animated-pages-transition-end', this.afterTransition);
+        this._tileClickHandler = this.tileClickHandler.bind(this);
+        this._restore = this.restore.bind(this);
+        this.content = this.$.items.getDistributedNodes();
+        this.registerHandler();
+      },
+
+      detached: function() {
+        this.super();
+        // Remove listener
+        this.removeEventListener('core-animated-pages-transition-prepare', this.beforeTransition);
+        this.removeEventListener('core-animated-pages-transition-end', this.afterTransition);
+        this.detaching = true;
+        this.registerHandler();
+      },
+
+      tileClickHandler: function(e) {
+        this.selected = e.currentTarget.getAttribute('linkto');
+      },
+
+      /**
+      * Navigate to the startup page.
+      *
+      * @method restore
+      * @param none
+      * @return none
+      */
+      restore: function(e) {
+        this.selected = 0;
+      },
+      
+      beforeTransition: function() {
+        var linkto = this.selected || this.lastSelected;
+        var query = '[linkto="' + linkto + '"][hero-id], [linkto="' + linkto + '"] [hero-id]' ;
+        this.heros = this.content[0].querySelectorAll(query);
+        for(var i = 0; i < this.heros.length; i++) {
+          this.heros[i].setAttribute('hero', '');
+        }
+      },
+
+      afterTransition: function() {
+        for(var i = 0; i < this.heros.length; i++) {
+          this.heros[i].removeAttribute('hero');
+        }
+      },
+
+      registerHandler: function() {
+        for(var i = 0; i < this.content.length; i++) {
+          if(this.content[i].attributes.window) {
+            var closeBtn = this.content[i].querySelector('[closeButton]');
+            if(closeBtn) {
+              if(this.detaching)
+                closeBtn.removeEventListener('click', this._restore);
+              else
+                closeBtn.addEventListener('click', this._restore);
+            }
+          } else {
+            this.linktos = this.content[i].querySelectorAll('[linkto]');
+            for(var j = 0; j < this.linktos.length; j++) {
+              if(this.detaching)
+                this.linktos[j].removeEventListener('click', this._tileClickHandler);
+              else
+                this.linktos[j].addEventListener('click', this._tileClickHandler);
+            }
+          }
+        }
+      }
+
+    });
+
+  </script>
+
+</polymer-element>

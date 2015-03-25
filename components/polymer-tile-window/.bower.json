@@ -1,0 +1,36 @@
+{
+  "name": "polymer-tile-window",
+  "authors": [
+    "teaegg"
+  ],
+  "description": "polymer-tile-window",
+  "keywords": [
+    "web-component",
+    "web-components",
+    "polymer",
+    "tile",
+    "window"
+  ],
+  "main": "polymer-tile-window.html",
+  "license": "MIT",
+  "homepage": "https://github.com/teaegg/polymer-tile-window/",
+  "ignore": [
+    "/.*",
+    "/tests/"
+  ],
+  "dependencies": {
+    "polymer": "Polymer/polymer#^0.5.4",
+    "core-animated-pages": "Polymer/core-animated-pages#~0.5.5",
+    "polymer-tile": "teaegg/polymer-tile#~1.0.5"
+  },
+  "_release": "ffc4212f72",
+  "_resolution": {
+    "type": "branch",
+    "branch": "master",
+    "commit": "ffc4212f72b77923a683e73beb6fc2b670dd77f5"
+  },
+  "_source": "git://github.com/teaegg/polymer-tile-window.git",
+  "_target": "master",
+  "_originalSource": "teaegg/polymer-tile-window",
+  "_direct": true
+}

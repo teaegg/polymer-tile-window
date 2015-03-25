@@ -1,0 +1,115 @@
+<link rel="import" href="../polymer/polymer.html">
+
+<!--
+A tile container for Polymer.
+
+##### Example
+
+    <style>
+      .tile-1,
+      .tile-2,
+      .tile-4 {
+        box-sizing: border-box;
+        position: relative;
+      }
+      .tile-1 {
+        width: 120px;
+        height: 120px;
+        float: left;
+      }
+      .tile-2 {
+        width: 248px;
+        height: 120px;
+        margin: 4px;
+      }
+      .tile-2 .tile-1:nth-child(even) {
+        margin-left: 8px;
+      }
+      .tile-4 {
+        width: 248px;
+        height: 248px;
+        margin: 4px;
+      }
+    </style>
+
+    <polymer-tile fit>
+      <div class="tile-2">
+        <div class="tile-1" style="background: yellow;"></div>
+        <div class="tile-1" style="background: red;"></div>
+      </div>
+      <div class="tile-2" style="background: orange;"></div>
+      <div class="tile-4" style="background: purple;"></div>
+    </polymer-tile>
+
+@element polymer-tile
+@blurb A tile container for Polymer.
+@status release
+@homepage https://github.com/teaegg/polymer-tile
+-->
+<polymer-element name="polymer-tile" attributes="orient">
+
+  <template>
+
+    <style>
+      :host {
+        display: block;
+      }
+    </style>
+
+    <content></content>
+    <div id="placeholder"></div>
+
+  </template>
+
+  <script>
+    Polymer('polymer-tile', {
+
+      /**
+       * Orientation of the scroller to be observed (`v` for vertical, `h` for horizontal)
+       *
+       * @attribute orient
+       * @type string
+       * @default 'h'
+       */
+      orient: 'h',
+
+      orientChanged: function() {
+        this.setAttribute(this.orient == 'h' ? 'vertical' : 'horizontal', '');
+        this.style.overflowX = this.orient == 'h' ? 'auto' : 'hidden';
+        this.style.overflowY = this.orient == 'v' ? 'auto' : 'hidden';
+        if(this.orient == 'h')
+          this.$.placeholder.style.marginRight = '100%';
+        else
+          this.$.placeholder.style.marginBottom = '100%';
+      },
+
+      scrollHandler: function(e) {
+        e.preventDefault();
+        var delta = Math.max(-1, Math.min(1, (e.wheelDelta || -e.detail)));
+        if(this.orient == 'h')
+          this.scrollLeft -= (delta*100);
+        else
+          this.scrollTop -= (delta*100);
+      },
+
+      ready: function() {
+        this._scrollHandler = this.scrollHandler.bind(this);
+        this.addEventListener('mousewheel', this._scrollHandler);
+        this.addEventListener('DOMMouseScroll', this._scrollHandler);
+        // setup outer container
+        this.setAttribute('layout', '');
+        this.setAttribute('wrap', '');
+        this.orientChanged();
+      },
+
+      detached: function() {
+        // Remove listener
+        this.removeEventListener('mousewheel', this._scrollHandler);
+        this.removeEventListener('DOMMouseScroll', this._scrollHandler);
+      }
+
+    });
+
+  </script>
+
+</polymer-element>

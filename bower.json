@@ -1,0 +1,7 @@
+{
+  "name": "polymer-tile-window#gh-pages",
+  "private": true,
+  "dependencies": {
+    "polymer-tile-window": "teaegg/polymer-tile-window#master"
+  }
+}
